@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.sp
 import model.Buttons
 import ui.CalculatorButton
 import utils.Constants
-import java.util.*
 import kotlin.math.pow
 
 
+@ExperimentalFoundationApi
 fun main() = Window(size = IntSize(320, 605), resizable = false) {
 
 
@@ -30,25 +30,20 @@ fun main() = Window(size = IntSize(320, 605), resizable = false) {
 
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@ExperimentalFoundationApi
 @Composable
 @Preview
 fun Calculator() {
     var result by remember {
         mutableStateOf("0")
     }
-    var sign by remember {
-        mutableStateOf("")
-    }
+
 
     var expression: String by remember {
         mutableStateOf("")
     }
 
 
-    var toShow by remember {
-        mutableStateOf("")
-    }
     Column(modifier = Modifier.background(Color.DarkGray).width(320.dp)) {
 
 
@@ -100,9 +95,7 @@ fun Calculator() {
                         }
                         Buttons.CLEAR -> {
                             result = ""
-                            sign = ""
                             expression = ""
-                            toShow = ""
                         }
                         Buttons.DELETE -> {
 
@@ -133,13 +126,16 @@ fun Calculator() {
                             }
                         }
                         Buttons.RESULT -> {
+                            if (isOperation(expression.last()))
+                                return@CalculatorButton
+
                             evaluate(expression).toString().apply {
-                                if (contains('.')) {
+                                result = if (contains('.')) {
                                     val index = indexOf('.')
                                     print("index,$index")
-                                    result = substring(0, index + 2)
+                                    substring(0, index + 2)
                                 } else {
-                                    result = this
+                                    this
                                 }
                             }
                         }
@@ -202,20 +198,12 @@ fun evaluate(expression: String): Double {
         // push it to stack for numbers
         if (tokens[i] in '0'..'9'
         ) {
-            val sbuf = StringBuffer()
+            val stringBuffer = StringBuffer()
 
-            // There may be more than one
-            // digits in number
-            while (i < tokens.size && tokens[i] >= '0' && tokens[i] <= '9') sbuf.append(tokens[i++])
-            values.push(sbuf.toString().toInt().toDouble())
+            while (i < tokens.size && tokens[i] >= '0' && tokens[i] <= '9') stringBuffer.append(tokens[i++])
+            values.push(stringBuffer.toString().toInt().toDouble())
 
-            // right now the i points to
-            // the character next to the digit,
-            // since the for loop also increases
-            // the i, we would skip one
-            //  token position; we need to
-            // decrease the value of i by 1 to
-            // correct the offset.
+
             i--
         } else if (tokens[i] == '(') ops.push(tokens[i]) else if (tokens[i] == ')') {
             while (ops.peek() != '(') values.push(
@@ -286,17 +274,17 @@ fun applyOp(
     b: Double, a: Double
 ): Double {
     when (op) {
-        '+' -> return a + b.toDouble()
-        '-' -> return a - b.toDouble()
-        '*' -> return a * b.toDouble()
+        '+' -> return a + b
+        '-' -> return a - b
+        '*' -> return a * b
         '/' -> {
             if (b == 0.0) throw UnsupportedOperationException(
                 "Cannot divide by zero"
             )
-            return a / b.toDouble()
+            return a / b
         }
         '^' -> {
-            return a.toDouble().pow(b)
+            return a.pow(b)
         }
 
     }
