@@ -1,34 +1,35 @@
 package utils
 
 import model.ButtonType
+import model.Buttons
 
 object Constants {
 
-    val buttons: List<ButtonType> =
+    val buttons =
         listOf(
-            ButtonType("%", "operation"),
-            ButtonType("^", "operation"),
-            ButtonType("1/x", "numberOperation"),
-            ButtonType("x^2", "numberOperation"),
-            ButtonType("CE", "clear"),
-            ButtonType("C", "clear"),
-            ButtonType("C", "delete"),
-            ButtonType("/", "operation"),
-            ButtonType("7", "number"),
-            ButtonType("8", "number"),
-            ButtonType("9", "number"),
-            ButtonType("*", "operation"),
-            ButtonType("4", "number"),
-            ButtonType("5", "number"),
-            ButtonType("6", "number"),
-            ButtonType("-", "operation"),
-            ButtonType("1", "number"),
-            ButtonType("2", "number"),
-            ButtonType("3", "number"),
-            ButtonType("+", "operation"),
-            ButtonType("+/-", "negative"),
-            ButtonType("0", "number"),
-            ButtonType(".", "dot"),
-            ButtonType("=", "result"),
+            ButtonType("%", Buttons.OPERATION),
+            ButtonType("^", Buttons.OPERATION),
+            ButtonType("1/x", Buttons.NUMBER_OPERATION),
+            ButtonType("x^2", Buttons.NUMBER_OPERATION),
+            ButtonType("CE", Buttons.CLEAR),
+            ButtonType("C", Buttons.CLEAR),
+            ButtonType("C", Buttons.DELETE),
+            ButtonType("/", Buttons.OPERATION),
+            ButtonType("7", Buttons.NUMBER),
+            ButtonType("8", Buttons.NUMBER),
+            ButtonType("9", Buttons.NUMBER),
+            ButtonType("*", Buttons.OPERATION),
+            ButtonType("4", Buttons.NUMBER),
+            ButtonType("5", Buttons.NUMBER),
+            ButtonType("6", Buttons.NUMBER),
+            ButtonType("-", Buttons.OPERATION),
+            ButtonType("1", Buttons.NUMBER),
+            ButtonType("2", Buttons.NUMBER),
+            ButtonType("3", Buttons.NUMBER),
+            ButtonType("+", Buttons.OPERATION),
+            ButtonType("+/-", Buttons.PLUS_NEGATIVE),
+            ButtonType("0", Buttons.NUMBER),
+            ButtonType(".", Buttons.DOT),
+            ButtonType("=", Buttons.RESULT),
         )
 }
